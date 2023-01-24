@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://UI/HelpScreen/HelpScreen.gd" type="Script" id=1]
+[ext_resource path="res://Resource/Minecraft.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://UI/HelpScreen/help screen.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 9
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Close"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -180 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Open"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -180 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[node name="HelpScreen" type="Node2D"]
+z_index = 1
+script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect"]
+margin_left = 10.0
+margin_top = 12.0
+margin_right = 307.0
+margin_bottom = 152.0
+focus_mode = 2
+custom_fonts/normal_font = SubResource( 1 )
+scroll_active = false
+selection_enabled = true
+
+[node name="Button" type="Button" parent="TextureRect"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -24.0
+margin_top = -29.0
+margin_right = 24.0
+margin_bottom = -9.0
+focus_mode = 0
+toggle_mode = true
+text = "         "
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Close = SubResource( 2 )
+anims/Open = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[connection signal="pressed" from="TextureRect/Button" to="." method="_on_Button_pressed"]

@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Ingredients/ingredient_tscn/TestIngredient.tscn" type="PackedScene" id=1]
+[ext_resource path="res://stirring_rod/Stirring Rod.png" type="Texture" id=2]
+[ext_resource path="res://swipe_detector/Swipe Detector.tscn" type="PackedScene" id=3]
+[ext_resource path="res://stirring_rod/Stirring Rod.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.00006
+height = 67.9999
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 7.0
+
+[node name="Stirring Rod" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0, 1 )
+rotation = 3.14159
+shape = SubResource( 1 )
+
+[node name="Swipe Detector" parent="." index="2" instance=ExtResource( 3 )]
+
+[node name="Area2D" parent="." index="3"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2( 0, 34 )
+shape = SubResource( 2 )
+
+[connection signal="swipe_detected" from="Swipe Detector" to="." method="_on_Swipe_Detector_swipe_detected"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
